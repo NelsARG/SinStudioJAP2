@@ -1,11 +1,8 @@
-# estructuras/arbol_avl.py
-
 from modelos.nodos import NodoAVL
 
 class ArbolAVL:
-    # Implementa un Árbol AVL (Árbol de Búsqueda Auto-balanceable)
-    # Garantiza tiempos de búsqueda, inserción y eliminación de O(log n)
-    # Permite sugerir palabras completas al introducir un prefijo usando recorridos inorden
+    # Implementa un Árbol AVL 
+     # Permite sugerir palabras completas al introducir un prefijo usando recorridos inorden
     
     def __init__(self):
         self.raiz = None
