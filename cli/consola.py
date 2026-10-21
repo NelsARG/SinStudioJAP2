@@ -1,3 +1,4 @@
+import re
 from estructuras.arbol_n_ario import ArbolNArio
 from estructuras.arbol_binario import ArbolBinarioExpresiones
 from estructuras.arbol_avl import ArbolAVL
@@ -5,7 +6,7 @@ from estructuras.arbol_b import ArbolB
 
 class ConsolaCLI:
     # Implementa la Consola de Línea de Comandos utilizando el Patrón Command
-    
+    # Integra las estructuras de Árbol N-ario, Binario, AVL y B con indexación dinámica de archivos
     
     def __init__(self):
         self.arbol_n_ario = ArbolNArio()
@@ -36,13 +37,40 @@ class ConsolaCLI:
         comando = partes[0].lower()
         argumento = partes[1] if len(partes) > 1 else ""
 
-        # Comandos del Árbol N-ario[cite: 3]
+        # Comandos del Árbol N-ario (Workspace)
         if comando == "mkdir":
             if not argumento:
                 print("Uso: mkdir <nombre_carpeta>")
                 return
             self.arbol_n_ario.crear_carpeta(argumento)
             print(f"Carpeta '{argumento}' creada exitosamente.")
+
+        elif comando == "touch":
+            if not argumento:
+                print("Uso: touch <nombre_archivo>")
+                return
+            self.arbol_n_ario.crear_archivo(argumento)
+            print(f"Archivo '{argumento}' creado exitosamente.")
+
+        elif comando == "write":
+            # Permite escribir contenido en un archivo del directorio actual: write <archivo> <texto>
+            sub_partes = argumento.split(maxsplit=1)
+            if len(sub_partes) < 2:
+                print("Uso: write <nombre_archivo> <texto>")
+                return
+            nombre_archivo = sub_partes[0]
+            contenido = sub_partes[1]
+            
+            # Buscar el archivo en los hijos del nodo actual
+            encontrado = False
+            for hijo in self.arbol_n_ario.nodo_actual.hijos:
+                if hijo.nombre == nombre_archivo and not hijo.es_carpeta:
+                    hijo.contenido = contenido
+                    encontrado = True
+                    print(f"Contenido guardado en '{nombre_archivo}'.")
+                    break
+            if not encontrado:
+                print(f"Archivo no encontrado: {nombre_archivo}")
 
         elif comando == "cd":
             if not argumento:
@@ -80,12 +108,25 @@ class ConsolaCLI:
             sugerencias = self.arbol_avl.sugerir_por_prefijo(argumento)
             print(f"Sugerencias para '{argumento}': {sugerencias}")
 
-        # Comandos del Árbol B
+        # Comandos del Árbol B (Indexación Dinámica y Búsqueda Global)
         elif comando == "index-all":
-            # Simula el escaneo de archivos abiertos y actualización del Árbol B
-            self.arbol_b.insertar_o_actualizar("main", "main.py", 10)
-            self.arbol_b.insertar_o_actualizar("contador", "utils.py", 5)
-            print("¡Árbol B indexado exitosamente con los tokens del Workspace!")
+            # Escanea dinámicamente todos los archivos reales del Workspace y los indexa en el Árbol B
+            self.arbol_b = ArbolB() # Reiniciamos el árbol para reconstruir el índice actualizado
+            archivos = self.arbol_n_ario.obtener_todos_los_archivos()
+            
+            total_tokens = 0
+            for archivo in archivos:
+                if archivo.contenido:
+                    # Dividimos el contenido en líneas para registrar la línea exacta
+                    lineas = archivo.contenido.split('\n')
+                    for num_linea, linea in enumerate(lineas, start=1):
+                        # Extraemos tokens usando expresiones regulares
+                        tokens = re.findall(r'\b[a-zA-Z_][a-zA-Z0-9_]*\b', linea)
+                        for token in tokens:
+                            self.arbol_b.insertar_o_actualizar(token, archivo.nombre, num_linea)
+                            total_tokens += 1
+                            
+            print(f"¡Árbol B indexado exitosamente! Se procesaron {total_tokens} tokens de los archivos del Workspace.")
 
         elif comando == "find-global":
             if not argumento:
@@ -103,13 +144,15 @@ class ConsolaCLI:
 
         elif comando == "help":
             print("Comandos disponibles:")
-            print("  mkdir <nombre>          - Crea una carpeta en el Workspace (Árbol N-ario)")
-            print("  cd <nombre>             - Cambia de directorio o sube con '..' (Árbol N-ario)")
-            print("  tree                    - Muestra la jerarquía de archivos en preorden (Árbol N-ario)")
-            print('  eval "<expresion>"      - Evalúa una expresión matemática en postorden (Árbol Binario)')
+            print("  mkdir <nombre>          - Crea una carpeta en el Workspace")
+            print("  touch <nombre>          - Crea un archivo de código en el Workspace")
+            print("  write <archivo> <texto> - Escribe texto/código dentro de un archivo")
+            print("  cd <nombre>             - Cambia de directorio o sube con '..'")
+            print("  tree                    - Muestra la jerarquía de archivos en preorden")
+            print('  eval "<expresion>"      - Evalúa una expresión matemática en postorden')
             print("  add-keyword <palabra>   - Inserta una palabra clave con balanceo (Árbol AVL)")
             print("  suggest <prefijo>       - Sugiere palabras clave por prefijo (Árbol AVL)")
-            print("  index-all               - Indexa variables y funciones (Árbol B)")
+            print("  index-all               - Escanea e indexa dinámicamente los archivos del Workspace (Árbol B)")
             print("  find-global <token>     - Busca un token globalmente en archivos (Árbol B)")
             print("  exit                    - Sale de la aplicación")
         else:
