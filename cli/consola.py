@@ -5,7 +5,7 @@ from estructuras.arbol_b import ArbolB
 
 class ConsolaCLI:
     # Implementa la Consola de Línea de Comandos utilizando el Patrón Command
-    # Integra las estructuras de Árbol N-ario, Binario, AVL y B de forma directa[cite: 3]
+    
     
     def __init__(self):
         self.arbol_n_ario = ArbolNArio()
@@ -15,7 +15,7 @@ class ConsolaCLI:
         self.ejecutando = True
 
     def iniciar(self):
-        # Inicia el bucle principal de la interfaz de comandos del Mini IDE[cite: 3]
+        # Inicia el bucle principal de la interfaz de comandos del Mini IDE
         print("=== Synthetix Studio CLI ===")
         print("Escribe 'help' para ver los comandos disponibles o 'exit' para salir.")
         
@@ -55,7 +55,7 @@ class ConsolaCLI:
         elif comando == "tree":
             print(self.arbol_n_ario.imprimir_arbol())
 
-        # Comando del Árbol Binario[cite: 3]
+        # Comando del Árbol Binario
         elif comando == "eval":
             if not argumento:
                 print('Uso: eval "<expresion>"')
@@ -65,7 +65,7 @@ class ConsolaCLI:
             resultado = self.arbol_binario.evaluar()
             print(f"Resultado: {resultado}")
 
-        # Comandos del Árbol AVL[cite: 1, 3]
+        # Comandos del Árbol AVL
         elif comando == "add-keyword":
             if not argumento:
                 print("Uso: add-keyword <palabra>")
@@ -80,9 +80,9 @@ class ConsolaCLI:
             sugerencias = self.arbol_avl.sugerir_por_prefijo(argumento)
             print(f"Sugerencias para '{argumento}': {sugerencias}")
 
-        # Comandos del Árbol B[cite: 1, 3]
+        # Comandos del Árbol B
         elif comando == "index-all":
-            # Simula el escaneo de archivos abiertos y actualización del Árbol B[cite: 3]
+            # Simula el escaneo de archivos abiertos y actualización del Árbol B
             self.arbol_b.insertar_o_actualizar("main", "main.py", 10)
             self.arbol_b.insertar_o_actualizar("contador", "utils.py", 5)
             print("¡Árbol B indexado exitosamente con los tokens del Workspace!")
@@ -103,14 +103,14 @@ class ConsolaCLI:
 
         elif comando == "help":
             print("Comandos disponibles:")
-            print("  mkdir <nombre>          - Crea una carpeta en el Workspace (Árbol N-ario)[cite: 3]")
-            print("  cd <nombre>             - Cambia de directorio o sube con '..' (Árbol N-ario)[cite: 3]")
-            print("  tree                    - Muestra la jerarquía de archivos en preorden (Árbol N-ario)[cite: 3]")
-            print('  eval "<expresion>"      - Evalúa una expresión matemática en postorden (Árbol Binario)[cite: 3]')
-            print("  add-keyword <palabra>   - Inserta una palabra clave con balanceo (Árbol AVL)[cite: 1, 3]")
-            print("  suggest <prefijo>       - Sugiere palabras clave por prefijo (Árbol AVL)[cite: 1, 3]")
-            print("  index-all               - Indexa variables y funciones (Árbol B)[cite: 1, 3]")
-            print("  find-global <token>     - Busca un token globalmente en archivos (Árbol B)[cite: 1, 3]")
+            print("  mkdir <nombre>          - Crea una carpeta en el Workspace (Árbol N-ario)")
+            print("  cd <nombre>             - Cambia de directorio o sube con '..' (Árbol N-ario)")
+            print("  tree                    - Muestra la jerarquía de archivos en preorden (Árbol N-ario)")
+            print('  eval "<expresion>"      - Evalúa una expresión matemática en postorden (Árbol Binario)')
+            print("  add-keyword <palabra>   - Inserta una palabra clave con balanceo (Árbol AVL)")
+            print("  suggest <prefijo>       - Sugiere palabras clave por prefijo (Árbol AVL)")
+            print("  index-all               - Indexa variables y funciones (Árbol B)")
+            print("  find-global <token>     - Busca un token globalmente en archivos (Árbol B)")
             print("  exit                    - Sale de la aplicación")
         else:
             print(f"Comando desconocido: '{comando}'. Escribe 'help' para ver la lista de comandos.")
