@@ -1,22 +1,22 @@
 class NodoArbolB:
-    # Representa un nodo (página) dentro del Árbol B (B-Tree)
-    # Cada clave es un token (nombre de variable o función) y su valor es una lista de referencias (ID de archivo y línea)[cite: 3]
+    # Representa un nodo dentro del Árbol B (B-Tree)
+    # Cada clave es un token (nombre de variable o función) y su valor es una lista de referencias (ID de archivo y línea)
     def __init__(self, es_hoja: bool = True, orden_minimo: int = 4):
         self.es_hoja = es_hoja
-        self.orden_minimo = orden_minimo  # Orden mínimo m del Árbol B (ej. m = 4)[cite: 3]
-        self.claves = []   # Lista de tokens (variables o funciones)[cite: 3]
-        self.valores = []  # Lista de referencias compuestas por IDs de archivos y líneas[cite: 3]
+        self.orden_minimo = orden_minimo  # Orden mínimo m del Árbol B (ej. m = 4)
+        self.claves = []   # Lista de tokens (variables o funciones)
+        self.valores = []  # Lista de referencias compuestas por IDs de archivos y líneas
         self.hijos = []    # Punteros a los nodos hijos
 
 class ArbolB:
-    # Implementa un Árbol B para simular un motor de búsqueda de alta eficiencia para la opción "Buscar en todos los archivos"[cite: 3]
-    # Permite indexar todas las variables y funciones creadas por el usuario en el Workspace[cite: 3]
+    # Implementa un Árbol B para simular un motor de búsqueda de alta eficiencia para la opción "Buscar en todos los archivos"
+    # Permite indexar todas las variables y funciones creadas por el usuario en el Workspace
     def __init__(self, orden_minimo: int = 4):
         self.raiz = NodoArbolB(es_hoja=True, orden_minimo=orden_minimo)
         self.orden_minimo = orden_minimo
 
     def insertar_o_actualizar(self, token: str, archivo_id: str, linea: int) -> None:
-        # Inserta o actualiza un token en el Árbol B asociándolo con su archivo y línea correspondiente[cite: 3]
+        # Inserta o actualiza un token en el Árbol B asociándolo con su archivo y línea correspondiente
         raiz = self.raiz
         if len(raiz.claves) >= (2 * self.orden_minimo) - 1:
             nuevo_nodo = NodoArbolB(es_hoja=False, orden_minimo=self.orden_minimo)
@@ -75,7 +75,7 @@ class ArbolB:
             self._insertar_no_lleno(nodo.hijos[i], token, archivo_id, linea)
 
     def buscar_global(self, token: str) -> list:
-        # Busca un token específico en el Árbol B y muestra en qué archivos y líneas se encuentra[cite: 1, 3]
+        # Busca un token específico en el Árbol B y muestra en qué archivos y líneas se encuentra
         return self._buscar_recursivo(self.raiz, token)
 
     def _buscar_recursivo(self, nodo: NodoArbolB, token: str) -> list:
