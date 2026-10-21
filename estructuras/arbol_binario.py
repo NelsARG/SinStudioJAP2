@@ -2,14 +2,13 @@ from modelos.nodos import NodoBinario
 
 class ArbolBinarioExpresiones:
     # Implementa un Árbol Binario para parsear y evaluar expresiones matemáticas
-    # Los nodos hoja almacenan operandos y los internos operadores (+, -, *, /)
+    
     
     def __init__(self):
         self.raiz = None
 
     def construir_desde_expresion(self, expresion: str) -> None:
-        # Parsea una cadena de texto y construye el árbol binario de expresiones
-        # Limpiamos los espacios en blanco de la expresión antes de procesarla
+        
         expresion_limpia = expresion.replace(" ", "")
         self.raiz = self._parsear_expresion(expresion_limpia)
 
