@@ -1,6 +1,6 @@
 class ArbolNArio:
-    # Implementa un Árbol N-ario para representar un sistema de archivos virtual (Workspace) dentro del IDE
-    # Permite la creación de carpetas, archivos de código anidados y recorridos para indexación
+    # Implementa un Árbol N-ario para representar un (Workspace) dentro del IDE
+    
     def __init__(self, nombre_raiz: str = "workspace"):
         from modelos.nodos import NodoNArio
         # Inicializa la raíz del espacio de trabajo con un nodo carpeta principal
