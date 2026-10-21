@@ -17,17 +17,16 @@
 
 El proyecto está diseñado bajo estrictos principios de Programación Orientada a Objetos (POO) y modularización por semejanza:
 
-```text
+
 .
-├── cli/
-│   └── consola.py          # Gestión de comandos y patrón de diseño CLI
-├── estructuras/
-│   ├── arbol_n_ario.py     # Lógica del sistema de archivos virtual
-│   ├── arbol_binario.py    # Lógica del evaluador de expresiones matemáticas
-│   ├── arbol_avl.py        # Lógica del autocompletado y balanceo
-│   └── arbol_b.py          # Lógica de indexación y búsqueda global
-├── modelos/
-│   └── nodos.py            # Clases de nodos para cada tipo de árbol
-├── main.py                 # Punto de entrada principal del Mini IDE
-├── .gitignore              # Archivos ignorados por Git
-└── README.md               # Documentación del proyecto
+ cli/
+    consola.py          # Gestión de comandos y patrón de diseño CLI
+ estructuras/
+    arbol_n_ario.py     # Lógica del sistema de archivos virtual
+    arbol_binario.py    # Lógica del evaluador de expresiones matemáticas
+    arbol_avl.py        # Lógica del autocompletado y balanceo
+    arbol_b.py          # Lógica de indexación y búsqueda global
+ modelos/
+    nodos.py            # Clases de nodos para cada tipo de árbol
+ main.py                 # Punto de entrada principal del Mini IDE
+ README.md               # Documentación del proyecto
